@@ -15,7 +15,7 @@ searchBtn.addEventListener('click',()=>{
     if (!city) {
         errorDiv.style.display = 'block';
         errorDiv.textContent = 'Please enter a city name.';
-        return; // Stop further execution
+        return; 
     }
     
     //show the spinner
@@ -29,8 +29,6 @@ searchBtn.addEventListener('click',()=>{
     .then(data=>{
 
         console.log(data)
-        // console.log(data)
-        //populate weather result
         cityName.textContent = data.name;
         const tempCelsius = data.main.temp - 273.15
         temperature.textContent = `${tempCelsius.toFixed(2)} °C`; // Convert Kelvin to Celsius
@@ -103,7 +101,7 @@ function showError(message) {
 }
 
 function changeBackgroundColor(temp) {
-    const container = document.querySelector('.container'); // Correctly select the container
+    const container = document.querySelector('.container');
     if (temp < 0) {
         container.style.backgroundColor = 'blue'; // Cold
     } else if (temp >= 0 && temp < 20) {
