@@ -8,37 +8,35 @@ const wind = document.getElementById('wind');
 const errorDiv = document.getElementById('errorMessage');
 const spinner = document.getElementById('spinner');
 const icon = document.getElementById('weatherIcon');
+const weatherResult = document.getElementById('weatherResult');
+
 
 searchBtn.addEventListener('click',()=>{
     const city = document.getElementById('cityInput').value.trim()
-
     if (!city) {
-        errorDiv.style.display = 'block';
-        errorDiv.textContent = 'Please enter a city name.';
-        return; 
+        showError('Please enter a city name.');
+        return; // Stop further execution
     }
     
     //show the spinner
     spinner.style.display = 'block';
     errorDiv.style.display = 'none';
-
     weatherResult.style.display = 'none';
 
+    
     //fetch details from api
     fetchWeather(city)
     .then(data=>{
-
         console.log(data)
+        // console.log(data)
+        //populate weather result
         cityName.textContent = data.name;
         const tempCelsius = data.main.temp - 273.15
         temperature.textContent = `${tempCelsius.toFixed(2)} °C`; // Convert Kelvin to Celsius
         weather.textContent = data.weather[0].description;
         humidity.textContent = `${data.main.humidity}%`;
         wind.textContent = `${data.wind.speed} m/s`;
-
         weatherResult.style.display = 'block'
-
-
         //function to upadate card background
         changeBackgroundColor(tempCelsius);
         switch (data.weather[0].main) {
@@ -60,10 +58,8 @@ searchBtn.addEventListener('click',()=>{
             default:
                 icon.className = 'fas fa-smog'; // Default weather icon
         }
-
     })
     
-
     .catch(err=>{
         console.error(err);
         if (err.message === 'city not found') {
@@ -77,13 +73,10 @@ searchBtn.addEventListener('click',()=>{
         //stop spinner
         spinner.style.display = 'none'
     })
-
 })
-
 function fetchWeather(city){
     const apiKey = 'befd984de4d3c050671d4eb935e6c660'; 
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`; 
-
     return fetch(url)
     .then(response=>{
         if(!response.ok){
@@ -92,16 +85,13 @@ function fetchWeather(city){
         return response.json()
     })
 }
-
-
 function showError(message) {
     errorDiv.textContent = message;
     errorDiv.style.display = 'block';
     errorDiv.style.color= 'red'
 }
-
 function changeBackgroundColor(temp) {
-    const container = document.querySelector('.container');
+    const container = document.querySelector('.container'); // Correctly select the container
     if (temp < 0) {
         container.style.backgroundColor = 'blue'; // Cold
     } else if (temp >= 0 && temp < 20) {
