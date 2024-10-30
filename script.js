@@ -101,4 +101,8 @@ function changeBackgroundColor(temp) {
     } else {
         container.style.backgroundColor = 'red' // Hot
     }
+
+    setTimeout(() => {
+        container.style.backgroundColor = '';
+    }, 5000)
 }
