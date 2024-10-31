@@ -86,7 +86,7 @@ function fetchWeather(city){
     })
 }
 function showError(message) {
-    errorDiv.textContent = message;
+    errorDiv.textContent = message
     errorDiv.style.display = 'block'
     errorDiv.style.color= 'red'
 }
